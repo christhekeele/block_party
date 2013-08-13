@@ -17,16 +17,16 @@ module BlockParty
         alias_method :[], :from_hash
 
         def load(source)
-          initialize_from_hash source
+          initialize_from_hash (JSON.load(source) or {})
         end
 
         def dump(configuration)
-          configuration.dump
+          configuration.dump if configuration
         end
 
       protected
 
-        def initialize_from_hash(source={})
+        def initialize_from_hash(source)
           klass = if klass_name = source.delete(:__configuration_class__)
             Object.const_get klass_name
           else; self; end
@@ -54,7 +54,7 @@ module BlockParty
       end
 
       def dump
-        to_hash
+        to_hash.to_json.to_s
       end
 
       def to_s
