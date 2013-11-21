@@ -6,8 +6,6 @@ module BlockParty
   configure_with Class.new(BlockParty::Configuration)
   once_configured do
     if self.configuration.global
-      Object.const_set 'Configurable',  BlockParty::Configurable
-      Object.const_set 'Configuration', BlockParty::Configuration
     end
     BlockParty::Configurable.configure do |config|
       defaults = [
